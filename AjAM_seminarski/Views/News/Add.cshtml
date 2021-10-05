@@ -1,0 +1,43 @@
+﻿@using AjAM_seminarski.ViewModel;
+@model NewsViewModel
+
+<div class="container mb-5">
+    <div class="row col-lg-12">
+        <h1 style="background-color:#f5f5f5; color:dimgray; border-radius:10px; padding:5px 10px">+ New post</h1>
+        <hr />
+        <form method="post" style="width:100%" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Title</label>
+                <input class="form-control" type="text" asp-for="@Model.Title" placeholder="Enter title" />
+            </div>
+            <div class="form-group">
+                <label>Content</label>
+                <div id="editor" onkeypress="log()" class="shadow w-100 rounded border d-block"></div>
+                <input type="text" asp-for="Content" id="content" value="" hidden/>
+
+            </div>
+            <div class="form-group">
+                <label>Image</label>
+                <input class="form-control" asp-for="@Model.Image" type="file" />
+            </div>
+            <button type="submit" id="log" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+
+    <div id="output"  class="w-100 h-100 d-block border rounded shadow p-2" style="overflow-wrap: break-word; display:none !important"></div>
+</div>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+<script>
+    var ed = new BlackEdit('editor', 'output');
+    ed.init(auto_output = true);
+
+    document.getElementById("log").addEventListener("mouseover", log);
+
+    function log() {
+        //var output = document.getElementsByTagName("iframe")[0].contentDocument.body.innerHTML;
+        $("#content").val(document.getElementsByTagName("iframe")[0].contentDocument.body.innerHTML);
+    }
+</script>

@@ -1,0 +1,91 @@
+﻿@model List<AjAM_seminarski.ViewModel.CarViewModel>
+
+    <div class="holder">
+        <div class="modal fade" id="emailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true">
+            <div class="modal-dialog float-right" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title emailModalLabel">Email</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <form method="post" action="/CarsList/SendEmail">
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Sender:</label>
+                                <input type="text" class="form-control recipient-name" name="ccMail" placeholder="person@mail.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="recipient-name" class="col-form-label">Reciever:</label>
+                                <p id="mail_message"></p>
+                                <input type="hidden" name="emailTo" id="mail_id" />
+                            </div>
+                            <div class="form-group">
+                                <label for="message-text" class="col-form-label">Content:</label>
+                                <textarea class="form-control message-text" name="message"></textarea>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-dark" data-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-outline-info">Send</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+<section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row ">
+            <div class="col-md-4 d-flex flex-row ">
+                @foreach (var item in Model)
+                {
+                    <div class="car-wrap rounded ftco-animate ml-2">
+                        <div class="img rounded d-flex align-items-end" style="background-image: url(@item.Pictures[0].Url);">
+                        </div>
+                        <div class="text">
+                            <h2 class="mb-0"><a href="car-single.html">@item.Name</a></h2>
+                            <div class="d-flex mb-3">
+                                <span class="cat">@item.Amount/available </span>
+                                <p class="price ml-auto">@item.Price<span>/day</span></p>
+                            </div>
+                            <p class="d-flex mb-0 d-block"><a href="/CarsList/Details/?id=@item.Id" class="btn btn-secondary py-2 ml-1">Details</a></p>
+                            <p class="d-flex mb-0 d-block">
+                                <input type="button" id="@("whish" + item.Id)" class="btn btn-primary py-2 ml-1" onclick="AddItem('@item.Id')" value="Add to wishlist" />
+                            </p>
+                            <p>
+                                @*<a href="#" type="button" onclick="modalPopUp('adjelihodjic@gmail.com')" id="emailModal" class="fa fa-address-card" title="Email"></a>*@
+                        </p>
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#emailModal">
+                            Pošalji upit
+                        </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function AddItem(id)
+    {
+        $.ajax({
+            type: "POST",
+            url: "/whishlist/additem/"+id,
+            success: function (result) {
+                if (result === true) {
+                    $("#whish" + id).val("Saved");
+                }
+                else {
+                    console.log("Snimanje nije uspjelo");
+                }
+            }
+        });
+    }
+</script>

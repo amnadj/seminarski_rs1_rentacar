@@ -1,0 +1,83 @@
+﻿@model AjAM_seminarski.Data.Car
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <h1>Edit</h1>
+
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Amount" class="control-label"></label>
+                    <input asp-for="Amount" class="form-control" />
+                    <span asp-validation-for="Amount" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Price" class="control-label"></label>
+                    <input asp-for="Price" class="form-control" />
+                    <span asp-validation-for="Price" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CategoryID" class="control-label"></label>
+                    <input asp-for="CategoryID" class="form-control" />
+                    <span asp-validation-for="CategoryID" class="text-danger"></span>
+                </div>
+                <div class="custom-file text-nowrap text-truncate">
+                    <input type="file" class="custom-file-input multiple mb-3" id="inputGroupFile01" name="files" multiple />
+                    <label class="custom-file-label">Choose file</label>
+                </div>
+                <span id="numberOFFiles" class="alert alert-info" ></span>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+<style>
+    #numberOFFiles {
+        display: none;
+    }
+</style>
+<script>
+    $(document).ready(function () {
+        $('input[type="file"]').on("change", function () {
+            let filenames = [];
+            let files = document.getElementById("inputGroupFile01").files;
+            for (var i = 0; i < files.length; i++) {
+                filenames.push(files[i].name);
+
+            }
+            $(this)
+                .next(".custom-file-label")
+                .html(filenames.join(","));
+            document.getElementById("numberOFFiles").style.display = "block";
+            document.getElementById("numberOFFiles").innerHTML = filenames.length + " files attached!";
+        });
+    });
+</script>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

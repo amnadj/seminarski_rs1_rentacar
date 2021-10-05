@@ -1,0 +1,56 @@
+﻿@model IEnumerable<AjAM_seminarski.Data.Car>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-3 mb-5">
+    @if (ViewBag.Message != null)
+    {
+        <div class="alert alert-success fade show float-right font-weight-bolder">@ViewBag.Message</div>
+    }
+    <p>
+        <a asp-action="Create" class="btn btn-primary">Create New Car</a>
+    </p>
+    <div class="d-flex flex-wrap" style="margin:auto">
+
+        @foreach (var item in Model)
+        {
+            <div class="card border-dark mb-3 ml-2 w-100" style="max-width: 18rem;">
+                <div class="card-header">
+                    <h5 class="card-title">@Html.DisplayFor(modelItem => item.Name)</h5>
+
+                </div>
+                <div class="card-body">
+                    <p class="card-text">@Html.DisplayFor(modelItem => item.Description)</p>
+
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">@Html.DisplayFor(modelItem => item.Amount)</li>
+                        <li class="list-group-item">@Html.DisplayFor(modelItem => item.Price)KM</li>
+                    </ul>
+                </div>
+                <div class="card-footer text-left">
+                    <a asp-action="Edit" class="btn btn-primary" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" class="btn btn-dark" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" class="btn btn-danger" asp-route-id="@item.Id">Delete</a>
+                    @using (Html.BeginForm("AddFeatures", "Cars", new { id = item.Id }, FormMethod.Get))
+                    {
+                        <button type="submit" class="btn btn-primary mt-2">Add Features</button>
+
+                    }
+
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+<script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $(".alert").css('opacity', '0');
+            }, 3000);
+        });
+</script>

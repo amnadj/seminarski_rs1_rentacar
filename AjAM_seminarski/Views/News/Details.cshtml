@@ -1,0 +1,29 @@
+﻿@using AjAM_seminarski.ViewModel;
+@model NewsViewModel 
+
+<section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('@Model.ImagePath');" data-stellar-background-ratio="0.5">
+    <div class="overlay"></div>
+    <div class="container">
+        <div class="row no-gutters slider-text js-fullheight align-items-end justify-content-start">
+            <div class="col-md-9 ftco-animate pb-5">
+                <h1 class="mb-3 bread">@Model.Title</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ftco-section ftco-degree-bg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 ftco-animate">
+                <h2 class="mb-3">@Model.Title</h2>
+                <p>@Html.Raw(@Model.Content)</p>
+               
+
+
+            </div> <!-- .col-md-8 -->
+            
+
+        </div>
+    </div>
+</section> <!-- .section -->

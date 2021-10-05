@@ -1,0 +1,13 @@
+﻿@model List<AjAM_seminarski.Data.Wishlist>
+
+@{ ViewData["Title"] = "Wishlist";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+
+
+<h1>Wishlist </h1>
+<h3>Auta:</h3>
+@foreach (var item in Model)
+{
+        <p><a href="/CarsList/Details/?id=@item.Car.Id">@item.Car.Name</a></p>
+}

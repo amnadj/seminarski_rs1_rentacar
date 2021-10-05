@@ -1,0 +1,64 @@
+﻿@model AjAM_seminarski.ViewModel.CarCommentViewModel
+
+<dl class="dl-horizontal">
+    <dt>
+        Komentar:
+    </dt>
+
+    <dd>
+        <div class="commentBox">
+            @using (Html.BeginForm("Add","CarComments",FormMethod.Post))
+            {
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">
+                            Vaša ocjena: <span style="font-weight: normal;">(1 je loše, 5 je odlično!)</span>
+                        </label>
+
+                        <div id="stars">
+                            <span class="starFade" id="star1" onclick="addStar('1');" ></span>
+                            <span class="starFade" id="star2" onclick="addStar('2');" ></span>
+                            <span class="starFade" id="star3" onclick="addStar('3');" ></span>
+                            <span class="starFade" id="star4" onclick="addStar('4');" ></span>
+                            <span class="starFade" id="star5" onclick="addStar('5');" ></span>                                    
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <textarea asp-for="Comment" required rows="5" style="width:100%" class="form-control"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-12">
+                                <input type="hidden" asp-for="CarId" />
+                                <input type="hidden" name="Rating" id="Rating" value="0" />
+                                <input type="submit" id="btnRegister" name="btnRegister" value="Posalji komentar" class="btn btn-warning" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </dd>
+</dl> 
+
+<script>
+
+    function addStar(ocjena) {
+        $("#Rating").val(ocjena);
+        CRateSelected();
+    }
+
+    function CRateSelected() {
+        var setRating = $("#Rating").val();
+        for (var i = 1; i <6; i++) {
+            $("#star" + i).removeClass("starGlow");
+            $("#star" + i).addClass("starFade");
+        }
+        for (var i = 1; i <= setRating; i++) {
+            $("#star" + i).removeClass("starFade");
+            $("#star" + i).addClass("starGlow");
+        }
+    }
+</script>

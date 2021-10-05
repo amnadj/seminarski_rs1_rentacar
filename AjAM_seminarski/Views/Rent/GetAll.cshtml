@@ -1,0 +1,44 @@
+﻿@using AjAM_seminarski.ViewModel;
+@{ 
+    var message = (string)ViewData["AlreadyVerified"];
+}
+@model List<GetAllRentsViewModel>
+<div class="container">
+    @if (message != null)
+    {
+        <p class="alert alert-info">@message</p>
+    }
+        @if (@Model.Count == 0)
+        {
+            <p class="alert alert-info">No rents yet!</p>
+        }
+        else
+        {
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <td>User</td>
+                        <td>Pick-up date</td>
+                        <td>Drop-off date</td>
+                        <td>Car</td>
+                        <td>Verified</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.User</td>
+                        <td>@item.FromDate.ToShortDateString()</td>
+                        <td>@item.ToDate.ToShortDateString()</td>
+                        <td>@item.Car</td>
+                        <td><span style="background-color: @(item.IsVerified ? "#85c981" : "#949494"); color:white; padding:5px 15px; border-radius:10px">@(item.IsVerified ? "DA" : "NE") </span> </td>
+                        <td>
+                            <a class="btn btn-primary" asp-action="Verify" asp-route-Id="@item.RentId">Odobri</a>
+                            <a class="btn btn-danger">Obrisi</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
+</div>
